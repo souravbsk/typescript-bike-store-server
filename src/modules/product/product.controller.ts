@@ -47,7 +47,7 @@ const createProduct = async (req: Request, res: Response) => {
 const getAllProduct = async (req: Request, res: Response) => {
   try {
     const { searchTerm } = req.query;
-    console.log(searchTerm);
+
     const result = await ProductServices.getAllProductFromDB(
       searchTerm as string,
     );
