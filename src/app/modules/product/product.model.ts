@@ -9,13 +9,13 @@ const productSchema = new Schema<TProduct>(
       required: true,
     },
     price: { type: Number, required: true, min: 0 },
-    category: {
+    model: {
       type: String,
       required: true,
-      enum: ['Mountain', 'Road', 'Hybrid', 'Electric'],
+      enum: ['mountain', 'road', 'hybrid', 'electric'],
     },
-    description: { type: String, required: true },
-    quantity: {
+    description: { type: String },
+    stock: {
       type: Number,
       required: true,
       min: 0,
@@ -24,6 +24,9 @@ const productSchema = new Schema<TProduct>(
       type: Boolean,
       required: true,
       default: true,
+    },
+    image_url: {
+      type: String,
     },
   },
   {

@@ -9,6 +9,7 @@ to manage a bike store inventory.
 
 - **Bike Management**: Users can add, remove,get, and update bikes in the inventory.
 - **Order Management**: User can easily place orders for bikes.
+- **User Management**: Users can register and login to the system.
 - **Error Handling**: The server handles errors and exceptions, providing informative error messages.
 - **Zod Error**: the server uses zod to validate product data and order data
 
@@ -16,16 +17,41 @@ to manage a bike store inventory.
 
 1. Clone the repo: `git clone https://github.com/souravbsk/typescript-bike-store-server.git`
 2. Install dependencies: `npm install`
-3. Start the server: `npm start`
+3. Start the server: `npm run start:dev`
 4. Use Postman with the API endpoints.
 
 ### API Endpoints
 
-- **POST /api/products**:create a new product .
-- **GET /api/products**: get all products.
-- **GET /api/products/:productId**: get a product by id.
-- **PUT /api/products/:productId**: Updates an product with product id.
-- **DELETE /api/products/:productId**: Removes a product from database .
+# baseURL: http://localhost:3000/api
 
-- **POST /api/orders**: create a new order.
-- **GET /api/orders/revenue**: get all order revenue value.
+User Endpoints:
+
+- **POST /users/register**: Create a new user
+- **POST /users/login**: Login to the system
+- **post /users/change-password**: Change user password
+
+- **GET /users**: Get all users
+
+- **GET /users/:id/make-admin**: Make a user admin
+
+- **PUT /users/:id/block**: Update a user status block
+
+- **DELETE /users/:id**: Delete a user
+
+Product Endpoints:
+
+- **POST /products/create-product**: Create a new product
+- **GET /products**: Get all products
+- **GET /products/:productId**: Get a product by id
+- **PATCh /products/:productId**: Update a product
+- **DELETE /products/:productId/**: Delete a product
+
+ORDER Endpoints:
+
+- **POST /orders/create-order**: Create a new order
+- **GET /orders**: Get all orders
+- **POST /orders/success/:tran_id**: SSL SUccess Route
+- **POST /orders/fail/:tran_id**: SSL Fail Route
+- **POST /orders/cancel/:tran_id**: SSL Cancel Route
+- **PATCH /orders/:order_id/order-status-change**: Update order status
+- **DELETE /orders/:order_id**: Delete an order

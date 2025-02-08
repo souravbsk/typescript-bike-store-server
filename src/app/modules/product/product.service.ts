@@ -1,3 +1,4 @@
+import QueryBuilder from '../../builder/QueryBuilder';
 import { TProduct } from './product.interface';
 import { Product } from './product.model';
 
@@ -7,14 +8,20 @@ const createProductIntoDB = async (productData: TProduct) => {
   return result;
 };
 
-const getAllProductFromDB = async (searchTerm: string | undefined) => {
-  let filter = {};
-  if (searchTerm && typeof searchTerm === 'string') {
-    filter = { $text: { $search: searchTerm } };
-  }
+const getAllProductFromDB = async (query: Record<string, unknown>) => {
+  const searchTerm = ['name', 'brand', 'model'];
+  console.log(query);
 
-  const result = await Product.find(filter);
-  return result;
+  const productQueryBuilder = new QueryBuilder(Product.find(), query)
+    .search(searchTerm)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+  const result = await productQueryBuilder.modelQuery;
+  const meta = await productQueryBuilder.countTotal();
+
+  return { result, meta };
 };
 
 const getProductByIdFormDB = async (id: string) => {
@@ -26,9 +33,10 @@ const getProductByIdFormDB = async (id: string) => {
 };
 
 const updateProductByIdInDB = async (id: string, productData: TProduct) => {
-  if (productData.quantity && productData.quantity > 0) {
+  if (productData.stock && productData.stock > 0) {
     productData.inStock = true;
-    console.log('first');
+  } else {
+    productData.inStock = false;
   }
 
   const result = await Product.findByIdAndUpdate(id, productData, {
